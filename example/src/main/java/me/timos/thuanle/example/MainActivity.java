@@ -63,6 +63,9 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_grid_adapter:
                 fragment = new GridAdapterFragment();
                 break;
+            case R.id.nav_image_adapter:
+                fragment = new ImageAdapterFragment();
+                break;
         }
 
         FragmentManager fm = getSupportFragmentManager();

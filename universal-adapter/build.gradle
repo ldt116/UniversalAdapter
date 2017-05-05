@@ -1,5 +1,29 @@
 apply plugin: 'com.android.library'
 
+ext {
+    bintrayRepo = 'maven'
+    bintrayName = 'UniversalAdapter'
+
+    publishedGroupId = 'me.timos.thuanle'
+    libraryName = 'UniversalAdapter'
+    artifact = 'universal-adapter'
+
+    libraryDescription = 'One Adapter to rule them all'
+
+    siteUrl = 'https://github.com/ldt116/UniversalAdapter'
+    gitUrl = 'https://github.com/ldt116/UniversalAdapter.git'
+
+    libraryVersion = '0.1.0'
+
+    developerId = 'ldt116'
+    developerName = 'Thuan Le'
+    developerEmail = 'ldt116@gmail.com'
+
+    licenseName = 'MIT License'
+    licenseUrl = 'https://github.com/ldt116/UniversalAdapter/blob/master/LICENSE'
+    allLicenses = ["MIT License"]
+}
+
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
@@ -11,7 +35,6 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
     }
     buildTypes {
         release {
@@ -36,3 +59,6 @@ dependencies {
 
     testCompile 'junit:junit:4.12'
 }
+
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'

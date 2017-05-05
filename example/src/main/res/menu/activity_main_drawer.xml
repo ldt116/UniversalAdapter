@@ -7,5 +7,8 @@
     <item
         android:id="@+id/nav_grid_adapter"
         android:title="Grid Adapter"/>
+    <item
+        android:id="@+id/nav_image_adapter"
+        android:title="Image Adapter"/>
 
 </menu>
