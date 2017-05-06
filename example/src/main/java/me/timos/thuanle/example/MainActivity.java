@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         Fragment fragment = null;
-        switch (id){
+        switch (id) {
             case R.id.nav_simple_adapter:
                 fragment = new SimpleAdapterFragment();
                 break;
@@ -65,6 +65,9 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_image_adapter:
                 fragment = new ImageAdapterFragment();
+                break;
+            case R.id.nav_group_adapter:
+                fragment = new GroupAdapterFragment();
                 break;
         }
 

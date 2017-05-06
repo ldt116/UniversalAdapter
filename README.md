@@ -32,7 +32,7 @@ Suppose we need to get a `RecyclerView` as below
 
 You need 2 works:
 
-* The `xml` layout as below
+* The `xml` layout for each item as below
 
 ```xml
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -58,22 +58,18 @@ You need 2 works:
 * An `Adapter` instance created from our lib by a few lines of code
 
 ```java
-public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-    RecyclerView rv = (RecyclerView) inflater.inflate(R.layout.fragment_recycler, container, false);
-    UniversalAdapter<String> adapter = UniversalAdapter.Builder.with("A","B","C","D","E","F","G","H","I","J")
-            .itemLayout(R.layout.item_simple)
-            .bind(TextViewBinder.Builder.with(R.id.tvTitle, String.class)
-                    .text(new OnBindAsyncAction<String, String>() {
-                        @Override
-                        public void map(int position, String data, DataCallback<String> callback) {
-                            callback.onResult(data);
-                        }
-                    }))
-            .build();
-    rv.setLayoutManager(new LinearLayoutManager(getContext()));
-    rv.setAdapter(adapter);
-    return rv;
-}
+RecyclerView rv = ....;
+UniversalAdapter<String> adapter = UniversalAdapter.Builder.with("A","B","C","D","E","F","G","H","I","J")
+        .itemLayout(R.layout.item_simple)
+        .bind(TextViewBinder.Builder.with(R.id.tvTitle, String.class)
+                .text(new OnBindAsyncAction<String, String>() {
+                    @Override
+                    public void map(int position, String data, DataCallback<String> callback) {
+                        callback.onResult(data);
+                    }
+                }))
+        .build();
+rv.setAdapter(adapter);
 ```
 
 That's all. No need create `Adapter` class. No need to create `ViewHolder` class. Let us do the boilerplate part.
@@ -121,15 +117,16 @@ There is a question, why dont just simplify the `map` to something give direct l
 
 You can check the complete examples in the [example](https://github.com/ldt116/UniversalAdapter/tree/master/example) project
 
-* [Columns aka Grid Adapter](doc/uasge-grid.md)
-
-![Example Grid](doc/screenshot/example-grid.png)
-
 * [Binding image view](doc/usage-image.md)
+
+![Example Image](doc/screenshot/example-image.png)
+
+* [Sectoned and Grid Adapter](doc/usage-group.md)
+
+![Example Grid](doc/screenshot/example-grid.png) ![Example Section](doc/screenshot/example-group.png)
 
 * [Binding custom view](doc/usage-custom-view.md)
 
-* [Sectioned adapter](doc/usage-group.md)
 
 
 ## Changelog

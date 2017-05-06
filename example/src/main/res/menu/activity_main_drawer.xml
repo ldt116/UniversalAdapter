@@ -10,5 +10,9 @@
     <item
         android:id="@+id/nav_image_adapter"
         android:title="Image Adapter"/>
+    <item
+        android:id="@+id/nav_group_adapter"
+        android:title="Group/Section Adapter"/>
+
 
 </menu>
