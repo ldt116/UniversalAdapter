@@ -69,6 +69,9 @@ public class MainActivity extends AppCompatActivity
             case R.id.nav_group_adapter:
                 fragment = new GroupAdapterFragment();
                 break;
+            case R.id.nav_custom_adapter:
+                fragment = new CircularImageAdapterFragment();
+                break;
         }
 
         FragmentManager fm = getSupportFragmentManager();

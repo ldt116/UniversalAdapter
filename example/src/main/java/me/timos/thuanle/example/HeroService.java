@@ -5,6 +5,17 @@ package me.timos.thuanle.example;
  */
 
 public class HeroService {
+    public static int getColor(String primary) {
+        switch (primary) {
+            case "agility":
+                return R.color.primary_attribute_agility;
+            case "strength":
+                return R.color.primary_attribute_strength;
+            default:
+                return R.color.primary_attribute_intelligence;
+        }
+    }
+
     public static Hero[] getHeroes() {
         return new Hero[]{
                 new Hero("Nature's Prophet", "http://cdn.dota2.com/apps/dota2/images/heroes/furion_vert.jpg", "intelligence"),

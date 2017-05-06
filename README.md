@@ -127,7 +127,7 @@ You can check the complete examples in the [example](https://github.com/ldt116/U
 
 * [Binding custom view](doc/usage-custom-view.md)
 
-
+![Example Custom View](doc/screenshot/example-custom.png) 
 
 ## Changelog
 Change log can be found [here](doc/changelog.md).
