@@ -1,9 +1,6 @@
 # UniversalAdapter
 
-**Note: This work is under construction. We do not release the library yet.**
-------------------------------------------
-
-Yet another adapter for **RecyclerView** on Android, or perhaps, the last one you need. With `UniversalAdapter`, you don't need to write a **RecyclerView** adapter ever again, including its' **ViewHolder**.
+Yet another adapter for `RecyclerView` on Android, or perhaps, this is the last one you need. With `UniversalAdapter`, you don't need to write a `RecyclerView.Adapter` ever again, including its' `ViewHolder`.
 
 ## Features
 
@@ -146,14 +143,12 @@ Acknowledgements
 * [Google Guava](https://github.com/google/guava)
 * [Ion](https://github.com/koush/ion)
 
-
 Contribution
 ------------ 
 
 Please fork this repository and contribute back using [pull requests](https://github.com/ldt116/UniversalAdapter/pulls).
 
 Any contributions, large or small, major features, bug fixes, additional language translations, unit/integration tests are welcomed and appreciated but will be thoroughly reviewed and discussed.
-
 
 License
 -------
