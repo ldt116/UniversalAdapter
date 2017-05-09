@@ -226,6 +226,12 @@ public class UniversalAdapter<D> extends RecyclerView.Adapter<UniversalAdapter.V
             return binder;
         }
 
+        public ViewBinder.Builder<T, View> bindView(@IdRes int resId) {
+            ViewBinder.Builder<T, View> binder = new ViewBinder.Builder<>(resId);
+            mParam.binders.add(binder.build());
+            return binder;
+        }
+
         public <V extends View> ViewBinder.Builder<T, V> bindView(@IdRes int resId, Class<V> classOfView) {
             ViewBinder.Builder<T, V> binder = new ViewBinder.Builder<>(resId);
             mParam.binders.add(binder.build());
