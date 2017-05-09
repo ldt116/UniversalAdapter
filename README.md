@@ -16,7 +16,7 @@ Yet another adapter for `RecyclerView` on Android, or perhaps, this is the last 
 You can get via `jCenter()` in Gradle:
 
 ```groovy
-compile 'me.timos.thuanle:universal-adapter:0.1.0'
+compile 'me.timos.thuanle:universal-adapter:0.2.1'
 ```
 
 ## Example  
@@ -125,6 +125,21 @@ You can check the complete examples in the [example](https://github.com/ldt116/U
 * [Binding custom view](doc/usage-custom-view.md)
 
 ![Example Custom View](doc/screenshot/example-custom.png) 
+
+### Using with lambda
+
+From our experience, with lambda function supported, the code will be more readable. For example
+
+```java
+UniversalAdapter.Builder<Skill> builder = UniversalAdapter.Builder.with(hero.skills)
+        .itemLayout(R.layout.item_hero_skill);
+builder.bindTextView(R.id.tvTitle)
+        .text((position, data, callback) -> callback.onResult(data.name));
+builder.bindImageView(R.id.ivThumb)
+        .image((position, data, callback) -> callback.onResult(data.thumbnail));
+
+UniversalAdapter<Skill> ua = builder.build();
+```
 
 ## Changelog
 Change log can be found [here](doc/changelog.md).
