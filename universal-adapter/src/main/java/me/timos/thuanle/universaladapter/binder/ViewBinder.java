@@ -70,7 +70,7 @@ public class ViewBinder<D, V extends View, P extends ViewBinder.Param<D, V>> {
         final int mId;
         Param<D, V> mParam;
 
-        Builder(@IdRes int resId) {
+        public Builder(@IdRes int resId) {
             mId = resId;
             mParam = new Param<>();
         }

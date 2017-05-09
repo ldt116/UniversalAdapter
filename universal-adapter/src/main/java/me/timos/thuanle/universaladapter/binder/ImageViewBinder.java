@@ -54,7 +54,7 @@ public class ImageViewBinder<D> extends ViewBinder<D, ImageView, ImageViewBinder
     public static class Builder<D> extends ViewBinder.Builder<D, ImageView> {
         private Param<D> mImageParam;
 
-        private Builder(@IdRes int resId) {
+        public Builder(@IdRes int resId) {
             super(resId);
             mParam = mImageParam = new Param<>();
         }

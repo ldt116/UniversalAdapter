@@ -1,6 +1,7 @@
 package me.timos.thuanle.universaladapter;
 
 import android.content.Context;
+import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,6 +20,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
+import me.timos.thuanle.universaladapter.binder.ImageViewBinder;
+import me.timos.thuanle.universaladapter.binder.TextViewBinder;
 import me.timos.thuanle.universaladapter.binder.ViewBinder;
 
 /**
@@ -209,6 +212,24 @@ public class UniversalAdapter<D> extends RecyclerView.Adapter<UniversalAdapter.V
 
         public Builder<T> bind(ViewBinder.Builder<T, ?> builder) {
             return bind(builder.build());
+        }
+
+        public ImageViewBinder.Builder<T> bindImageView(@IdRes int resId) {
+            ImageViewBinder.Builder<T> binder = new ImageViewBinder.Builder<>(resId);
+            mParam.binders.add(binder.build());
+            return binder;
+        }
+
+        public TextViewBinder.Builder<T> bindTextView(@IdRes int resId) {
+            TextViewBinder.Builder<T> binder = new TextViewBinder.Builder<>(resId);
+            mParam.binders.add(binder.build());
+            return binder;
+        }
+
+        public <V extends View> ViewBinder.Builder<T, V> bindView(@IdRes int resId, Class<V> classOfView) {
+            ViewBinder.Builder<T, V> binder = new ViewBinder.Builder<>(resId);
+            mParam.binders.add(binder.build());
+            return binder;
         }
 
         public UniversalAdapter<T> build() {

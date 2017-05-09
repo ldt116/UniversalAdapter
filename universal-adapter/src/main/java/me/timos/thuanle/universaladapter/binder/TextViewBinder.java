@@ -47,7 +47,7 @@ public class TextViewBinder<T> extends ViewBinder<T, TextView, TextViewBinder.Pa
     public static class Builder<D> extends ViewBinder.Builder<D, TextView> {
         Param<D> mTextParam;
 
-        private Builder(@IdRes int resId) {
+        public Builder(@IdRes int resId) {
             super(resId);
             mParam = mTextParam = new Param<>();
         }

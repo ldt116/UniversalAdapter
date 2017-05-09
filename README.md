@@ -136,7 +136,8 @@ Change log can be found [here](doc/changelog.md).
 
 Here is the list for future work
 
-* Binder for common widget views such as `Button`, `Spinner`.
+* Binders for common widgets such as `Button`, `Spinner`. etc.
+* Ability add new view type and it binders.
 
 Acknowledgements
 ----------------
