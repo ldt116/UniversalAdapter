@@ -8,9 +8,6 @@ import android.widget.TextView;
 import me.timos.thuanle.universaladapter.DataCallback;
 import me.timos.thuanle.universaladapter.OnBindAsyncAction;
 
-/**
- * Created by thuanle on 3/3/17.
- */
 public class TextViewBinder<T> extends ViewBinder<T, TextView, TextViewBinder.Param<T>> {
     private TextViewBinder(@IdRes int id, Param<T> param) {
         super(id, param);
@@ -22,16 +19,11 @@ public class TextViewBinder<T> extends ViewBinder<T, TextView, TextViewBinder.Pa
 
         final TextView tv = (TextView) v;
         if (mParam.text != null) {
-            mParam.text.map(position, data, new DataCallback<String>() {
+            mParam.text.map(position, data, new DataCallback<CharSequence>() {
                 @Override
-                public void onResult(String data) {
+                public void onResult(CharSequence data) {
                     tv.setText(data);
-
-                    if (mParam.goneWhenEmpty) {
-                        tv.setVisibility(TextUtils.isEmpty(data) ? View.GONE : View.VISIBLE);
-                    } else if (mParam.invisibleWhenEmpty) {
-                        tv.setVisibility(TextUtils.isEmpty(data) ? View.INVISIBLE : View.VISIBLE);
-                    }
+                    onTextBinded(data, tv);
                 }
             });
         }
@@ -46,8 +38,16 @@ public class TextViewBinder<T> extends ViewBinder<T, TextView, TextViewBinder.Pa
         }
     }
 
+    private void onTextBinded(CharSequence data, TextView tv) {
+        if (mParam.goneWhenEmpty) {
+            tv.setVisibility(TextUtils.isEmpty(data) ? View.GONE : View.VISIBLE);
+        } else if (mParam.invisibleWhenEmpty) {
+            tv.setVisibility(TextUtils.isEmpty(data) ? View.INVISIBLE : View.VISIBLE);
+        }
+    }
+
     static class Param<D> extends ViewBinder.Param<D, TextView> {
-        OnBindAsyncAction<D, String> text;
+        OnBindAsyncAction<D, CharSequence> text;
         OnBindAsyncAction<D, Integer> textColor;
         boolean goneWhenEmpty;
         boolean invisibleWhenEmpty;
@@ -101,7 +101,7 @@ public class TextViewBinder<T> extends ViewBinder<T, TextView, TextViewBinder.Pa
             return this;
         }
 
-        public Builder<D> text(OnBindAsyncAction<D, String> action1) {
+        public Builder<D> text(OnBindAsyncAction<D, CharSequence> action1) {
             mTextParam.text = action1;
             return this;
         }
@@ -110,6 +110,5 @@ public class TextViewBinder<T> extends ViewBinder<T, TextView, TextViewBinder.Pa
             mTextParam.textColor = action1;
             return this;
         }
-
     }
 }
