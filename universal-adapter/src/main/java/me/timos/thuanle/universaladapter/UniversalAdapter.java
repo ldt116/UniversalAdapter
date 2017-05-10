@@ -269,6 +269,24 @@ public class UniversalAdapter<D> extends RecyclerView.Adapter<UniversalAdapter.V
             return groupHeaderBind(builder.build());
         }
 
+        public ImageViewBinder.Builder<String> groupHeaderBindImageView(@IdRes int resId) {
+            ImageViewBinder.Builder<String> binder = new ImageViewBinder.Builder<>(resId);
+            mParam.groupHeaderBinders.add(binder.build());
+            return binder;
+        }
+
+        public TextViewBinder.Builder<String> groupHeaderBindTextView(@IdRes int resId) {
+            TextViewBinder.Builder<String> binder = new TextViewBinder.Builder<>(resId);
+            mParam.groupHeaderBinders.add(binder.build());
+            return binder;
+        }
+
+        public ViewBinder.Builder<String, View> groupHeaderBindView(@IdRes int resId) {
+            ViewBinder.Builder<String, View> binder = new ViewBinder.Builder<>(resId);
+            mParam.groupHeaderBinders.add(binder.build());
+            return binder;
+        }
+
         public Builder<T> groupHeaderLayout(@LayoutRes int layoutResId) {
             mParam.groupHeaderLayoutResId = layoutResId;
             return this;

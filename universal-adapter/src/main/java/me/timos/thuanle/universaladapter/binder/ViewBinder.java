@@ -47,6 +47,29 @@ public class ViewBinder<D, V extends View, P extends ViewBinder.Param<D, V>> {
                     v.setVisibility(data);
                 }
             });
+        } else if (mParam.goneWhen != null || mParam.invisibleWhen != null) {
+            v.setVisibility(View.VISIBLE);
+            if (mParam.goneWhen != null) {
+                mParam.goneWhen.map(position, data, new DataCallback<Boolean>() {
+                    @Override
+                    public void onResult(Boolean data) {
+                        if (data) {
+                            v.setVisibility(View.GONE);
+                        }
+                    }
+                });
+            }
+
+            if (mParam.invisibleWhen != null) {
+                mParam.invisibleWhen.map(position, data, new DataCallback<Boolean>() {
+                    @Override
+                    public void onResult(Boolean data) {
+                        if (data) {
+                            v.setVisibility(View.INVISIBLE);
+                        }
+                    }
+                });
+            }
         }
 
         if (mParam.customBindAction != null) {
@@ -64,6 +87,8 @@ public class ViewBinder<D, V extends View, P extends ViewBinder.Param<D, V>> {
         OnClickElementListener<D> onClickListener;
         OnBindCustomAction<D, V> customBindAction;
         OnBindAsyncAction<D, Integer> visibility;
+        OnBindAsyncAction<D, Boolean> goneWhen;
+        OnBindAsyncAction<D, Boolean> invisibleWhen;
     }
 
     public static class Builder<D, V extends View> {
@@ -93,12 +118,43 @@ public class ViewBinder<D, V extends View, P extends ViewBinder.Param<D, V>> {
             return this;
         }
 
+        /**
+         * Hide view if specific condition happened.
+         *
+         * @param action1
+         * @return builder for chain call
+         */
+        public Builder<D, V> goneWhen(OnBindAsyncAction<D, Boolean> action1) {
+            if (mParam.visibility != null) {
+                throw new IllegalArgumentException("Conflict binding options. You can not set both 'visibility' and 'goneWhen' at one object.");
+            }
+            mParam.goneWhen = action1;
+            return this;
+        }
+
+        /**
+         * Hide view if specific condition happened.
+         *
+         * @param action1
+         * @return builder for chain call
+         */
+        public Builder<D, V> invisibleWhen(OnBindAsyncAction<D, Boolean> action1) {
+            if (mParam.visibility != null) {
+                throw new IllegalArgumentException("Conflict binding options. You can not set both 'visibility' and 'invisibleWhen' at one object.");
+            }
+            mParam.invisibleWhen = action1;
+            return this;
+        }
+
         public Builder<D, V> onClick(OnClickElementListener<D> listener) {
             mParam.onClickListener = listener;
             return this;
         }
 
         public Builder<D, V> visibility(OnBindAsyncAction<D, Integer> action1) {
+            if (mParam.goneWhen != null || mParam.invisibleWhen != null) {
+                throw new IllegalArgumentException("Conflict binding options. You can not set both 'visibility' and 'goneWhen' or 'invisibleWhen' at one object.");
+            }
             mParam.visibility = action1;
             return this;
         }

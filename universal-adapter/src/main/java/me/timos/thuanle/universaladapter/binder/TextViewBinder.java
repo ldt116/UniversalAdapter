@@ -1,6 +1,7 @@
 package me.timos.thuanle.universaladapter.binder;
 
 import android.support.annotation.IdRes;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -25,6 +26,12 @@ public class TextViewBinder<T> extends ViewBinder<T, TextView, TextViewBinder.Pa
                 @Override
                 public void onResult(String data) {
                     tv.setText(data);
+
+                    if (mParam.goneWhenEmpty) {
+                        tv.setVisibility(TextUtils.isEmpty(data) ? View.GONE : View.VISIBLE);
+                    } else if (mParam.invisibleWhenEmpty) {
+                        tv.setVisibility(TextUtils.isEmpty(data) ? View.INVISIBLE : View.VISIBLE);
+                    }
                 }
             });
         }
@@ -42,6 +49,13 @@ public class TextViewBinder<T> extends ViewBinder<T, TextView, TextViewBinder.Pa
     static class Param<D> extends ViewBinder.Param<D, TextView> {
         OnBindAsyncAction<D, String> text;
         OnBindAsyncAction<D, Integer> textColor;
+        boolean goneWhenEmpty;
+        boolean invisibleWhenEmpty;
+
+        Param() {
+            goneWhenEmpty = false;
+            invisibleWhenEmpty = false;
+        }
     }
 
     public static class Builder<D> extends ViewBinder.Builder<D, TextView> {
@@ -59,6 +73,32 @@ public class TextViewBinder<T> extends ViewBinder<T, TextView, TextViewBinder.Pa
         @Override
         public ViewBinder<D, TextView, ? extends ViewBinder.Param<D, TextView>> build() {
             return new TextViewBinder<>(mId, mTextParam);
+        }
+
+        /**
+         * Set visibility is <code>View.GONE</code> when the text is null or 0-length.
+         *
+         * @return
+         */
+        public Builder<D> goneWhenEmpty() {
+            if (mTextParam.invisibleWhenEmpty) {
+                throw new IllegalArgumentException("Conflict binding options. You can not set both 'goneWhenEmpty' and 'invisibleWhenEmpty' at one object.");
+            }
+            mTextParam.goneWhenEmpty = true;
+            return this;
+        }
+
+        /**
+         * Set visibility is <code>View.INVISIBLE</code> when the text is null or 0-length.
+         *
+         * @return
+         */
+        public Builder<D> invisibleWhenEmpty() {
+            if (mTextParam.goneWhenEmpty) {
+                throw new IllegalArgumentException("Conflict binding options. You can not set both 'goneWhenEmpty' and 'invisibleWhenEmpty' at one object.");
+            }
+            mTextParam.invisibleWhenEmpty = true;
+            return this;
         }
 
         public Builder<D> text(OnBindAsyncAction<D, String> action1) {

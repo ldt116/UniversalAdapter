@@ -1,5 +1,7 @@
 # UniversalAdapter
 
+> NOTE:
+
 Yet another adapter for `RecyclerView` on Android, or perhaps, this is the last one you need. With `UniversalAdapter`, you don't need to write a `RecyclerView.Adapter` ever again, including its' `ViewHolder`.
 
 ## Features
@@ -8,8 +10,8 @@ Yet another adapter for `RecyclerView` on Android, or perhaps, this is the last 
 * No need to write `ViewHolder` class
 * Supports sectioned data with `categorizer`
 * Designed with `callback` for every binding function. So you can handle for long operations.
-* `ImageView` load from local drawble resource or remote url via [Ion](https://github.com/koush/ion).
-* Customized binder is availabled for customized view.
+* `ImageView` load from local drawable resource or remote url via [Ion](https://github.com/koush/ion).
+* Customized binder is available for customized view.
 
 ## Setup
 
@@ -150,6 +152,7 @@ Here is the list for future work
 
 * Binders for common widgets such as `Button`, `Spinner`. etc.
 * Ability add new view type and it binders.
+* Example for `visibility` such as `View.goneWhen`, `View.invisibleWhen`, ``TextView.goneWhenEmpty`...
 
 Acknowledgements
 ----------------
