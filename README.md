@@ -1,15 +1,15 @@
 # UniversalAdapter
 
-> NOTE:
+`RecyclerView` is the mandatory view needed for almost Android applications. If you are tired of creating messy classes in order to work with `RecyclerView`, or you don't want to copy the same base code again and again through your projects, then `UniversalAdapter` is the one for you.
 
-Yet another adapter for `RecyclerView` on Android, or perhaps, this is the last one you need. With `UniversalAdapter`, you don't need to write a `RecyclerView.Adapter` ever again, including its' `ViewHolder`.
+Yet another adapter class for `RecyclerView` on Android, or perhaps, this will be the last one you need. With `UniversalAdapter`, you don't need to write a `RecyclerView.Adapter` ever again, including its' `ViewHolder`.
 
 ## Features
 
 * No need to write `Adapter` class
 * No need to write `ViewHolder` class
 * Supports sectioned data with `categorizer`
-* Designed with `callback` for every binding function. So you can handle for long operations.
+* Designed with `callback` for every binding function. So you can handle for long time operations.
 * `ImageView` load from local drawable resource or remote url via [Ion](https://github.com/koush/ion).
 * Customized binder is available for customized view.
 
@@ -18,8 +18,11 @@ Yet another adapter for `RecyclerView` on Android, or perhaps, this is the last 
 You can get via `jCenter()` in Gradle:
 
 ```groovy
-compile 'me.timos.thuanle:universal-adapter:0.2.1'
+compile 'me.timos.thuanle:universal-adapter:1.0.0'
 ```
+Note: 
+
+* Version `1.x.x` requies `SdkVersion` >= 9.
 
 ## Example  
 
@@ -57,18 +60,18 @@ You need 2 works:
 * An `Adapter` instance created from our lib by a few lines of code
 
 ```java
-RecyclerView rv = ....;
-UniversalAdapter<String> adapter = UniversalAdapter.Builder.with("A","B","C","D","E","F","G","H","I","J")
-        .itemLayout(R.layout.item_simple)
-        .bind(TextViewBinder.Builder.with(R.id.tvTitle, String.class)
-                .text(new OnBindAsyncAction<String, String>() {
-                    @Override
-                    public void map(int position, String data, DataCallback<String> callback) {
-                        callback.onResult(data);
-                    }
-                }))
-        .build();
-rv.setAdapter(adapter);
+UniversalAdapter.Builder<String> builder = UniversalAdapter.Builder.with("A", "B", "C", "D", "E", "F", "G", "H", "I", "J")
+        .itemLayout(R.layout.item_simple);
+
+builder.bindTextView(R.id.tvTitle)
+        .text(new OnBindAsyncAction<String, CharSequence>() {
+            @Override
+            public void map(int position, String data, DataCallback<CharSequence> callback) {
+                callback.onResult(data);
+            }
+        });
+
+UniversalAdapter<String> adapter = builder.build();
 ```
 
 That's all. No need create `Adapter` class. No need to create `ViewHolder` class. Let us do the boilerplate part.
@@ -78,10 +81,8 @@ That's all. No need create `Adapter` class. No need to create `ViewHolder` class
 * Firstly, we create the builder pattern for the adapter as
 
 ```java
-UniversalAdapter<String> adapter = UniversalAdapter.Builder.with("A","B","C","D","E","F","G","H","I","J")
+UniversalAdapter.Builder<String> builder = UniversalAdapter.Builder.with("A", "B", "C", "D", "E", "F", "G", "H", "I", "J")
 ```
-
-Here, we have `String` is the data type for each item. You can find other example with `ArrayList` and customize data type later.
 
 * Then, we need to declare the layout of each item by using `itemLayout`
 
@@ -89,28 +90,29 @@ Here, we have `String` is the data type for each item. You can find other exampl
 .itemLayout(R.layout.item_simple)
 ```
 
-* Next step, we need to guide "how the data is display" or "binding step". In this example we bind the `TextView` with id `R.id.tvTitle` with the text at that position. In order to accomplish this, we need a `ViewBinder` for binding data to a particular view. There are ViewBinders which are already implemented for you to use. In this case, we will use `TextViewBinder`. Once again, `TextViewBinder` is provided with Builder pattern, which help you easily to create an instance without much effort.
-
-> Note: I am trying to make ViewBinders which cover all general View widgets in the meanwhile. So if you find widgets do not have binder, feel free to make a PR or creating an issue.
+* Next step, we need to guide *how the data is display* or *binding step*. In this example we bind the `TextView` with id `R.id.tvTitle` with the text at that position.
 
 ```java
-.bind(TextViewBinder.Builder.with(R.id.tvTitle, String.class)
-    .text(new OnBindAsyncAction<String, String>() {
-        @Override
-        public void map(int position, String data, DataCallback<String> callback) {
-            callback.onResult(data);
-        }
-    }))
+builder.bindTextView(R.id.tvTitle)
+        .text(new OnBindAsyncAction<String, CharSequence>() {
+            @Override
+            public void map(int position, String data, DataCallback<CharSequence> callback) {
+                callback.onResult(data);
+            }
+        });
 ```
-The `TextViewBinder.Builder.with(R.id.tvTitle, String.class)` creates a `TextViewBinder` with id `R.id.tvTitle` and `String.class` is the data of each item which must be the same class. 
-
 The `.text(..)` is corresponding the action `setText` for the `TextView`, you need to point the title you want to set in function `void map(int position, String data, DataCallback<String> callback)` with
 
 * `position` is the position of current item in the adapter.
 * `data` is the corresponding data of current item in the adapter.
 * `callback` provide you the method to return the data will be taken action (in this case, the data will be call as `setText(data)`. As we want the title will be the same as the data, so will call `callback.onResult(data)`
 
-There is a question, why dont just simplify the `map` to something give direct like `String map(position, data)`. The answer is with `callback` approach, you don't get ANR in case you need a long time process here (such as download image from the internet, you can find more in other example).
+**Note**:
+
+* In the 3rd step, we break the chain call. Each bind options for a specific view should call the original builder by begining the  statement with `builder.bind....`.  If you dig deeper, the call `builder.bindTextView` does not return the `UA-Builder`. It returns the `TextView-Builder` which allow add binding options for selected `TextView`.
+
+* There is a question, why dont just simplify the `map` to return direct the result, for example `String map(position, data)`. The answer is with `callback` approach, you don't get ANR in case you need a long time operations (such as download image from the internet, you can find more in other examples).
+
 
 ### Advance usage
 
@@ -143,16 +145,13 @@ builder.bindImageView(R.id.ivThumb)
 UniversalAdapter<Skill> ua = builder.build();
 ```
 
-## Changelog
-Change log can be found [here](doc/changelog.md).
-
 ## TODO
 
 Here is the list for future work
 
 * Binders for common widgets such as `Button`, `Spinner`. etc.
 * Ability add new view type and it binders.
-* Example for `visibility` such as `View.goneWhen`, `View.invisibleWhen`, ``TextView.goneWhenEmpty`...
+* Example for `visibility` such as `View.goneWhen`, `View.invisibleWhen`, `TextView.goneWhenEmpty`...
 
 Acknowledgements
 ----------------

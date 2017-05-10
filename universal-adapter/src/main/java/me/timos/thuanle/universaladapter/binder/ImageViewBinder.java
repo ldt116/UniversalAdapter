@@ -51,16 +51,12 @@ public class ImageViewBinder<D> extends ViewBinder<D, ImageView, ImageViewBinder
         OnBindAsyncAction<D, String> src;
     }
 
-    public static class Builder<D> extends ViewBinder.Builder<D, ImageView> {
+    public static class IVBuilder<D> extends VBuilder<D, ImageView> {
         private Param<D> mImageParam;
 
-        public Builder(@IdRes int resId) {
+        public IVBuilder(@IdRes int resId) {
             super(resId);
             mParam = mImageParam = new Param<>();
-        }
-
-        public static <T> Builder<T> with(@IdRes int resId, Class<T> classOfData) {
-            return new Builder<>(resId);
         }
 
         @Override
@@ -68,12 +64,12 @@ public class ImageViewBinder<D> extends ViewBinder<D, ImageView, ImageViewBinder
             return new ImageViewBinder<>(mId, mImageParam);
         }
 
-        public Builder<D> image(@DrawableRes int... drawableRes) {
+        public IVBuilder<D> image(@DrawableRes int... drawableRes) {
             mImageParam.imageResource = drawableRes;
             return this;
         }
 
-        public Builder<D> image(OnBindAsyncAction<D, String> action1) {
+        public IVBuilder<D> image(OnBindAsyncAction<D, String> action1) {
             mImageParam.src = action1;
             return this;
         }

@@ -58,16 +58,12 @@ public class TextViewBinder<T> extends ViewBinder<T, TextView, TextViewBinder.Pa
         }
     }
 
-    public static class Builder<D> extends ViewBinder.Builder<D, TextView> {
+    public static class TVBuilder<D> extends VBuilder<D, TextView> {
         Param<D> mTextParam;
 
-        public Builder(@IdRes int resId) {
+        public TVBuilder(@IdRes int resId) {
             super(resId);
             mParam = mTextParam = new Param<>();
-        }
-
-        public static <T> Builder<T> with(@IdRes int resId, Class<T> classOfData) {
-            return new Builder<>(resId);
         }
 
         @Override
@@ -80,7 +76,7 @@ public class TextViewBinder<T> extends ViewBinder<T, TextView, TextViewBinder.Pa
          *
          * @return
          */
-        public Builder<D> goneWhenEmpty() {
+        public TVBuilder<D> goneWhenEmpty() {
             if (mTextParam.invisibleWhenEmpty) {
                 throw new IllegalArgumentException("Conflict binding options. You can not set both 'goneWhenEmpty' and 'invisibleWhenEmpty' at one object.");
             }
@@ -93,7 +89,7 @@ public class TextViewBinder<T> extends ViewBinder<T, TextView, TextViewBinder.Pa
          *
          * @return
          */
-        public Builder<D> invisibleWhenEmpty() {
+        public TVBuilder<D> invisibleWhenEmpty() {
             if (mTextParam.goneWhenEmpty) {
                 throw new IllegalArgumentException("Conflict binding options. You can not set both 'goneWhenEmpty' and 'invisibleWhenEmpty' at one object.");
             }
@@ -101,12 +97,12 @@ public class TextViewBinder<T> extends ViewBinder<T, TextView, TextViewBinder.Pa
             return this;
         }
 
-        public Builder<D> text(OnBindAsyncAction<D, CharSequence> action1) {
+        public TVBuilder<D> text(OnBindAsyncAction<D, CharSequence> action1) {
             mTextParam.text = action1;
             return this;
         }
 
-        public Builder<D> textColor(OnBindAsyncAction<D, Integer> action1) {
+        public TVBuilder<D> textColor(OnBindAsyncAction<D, Integer> action1) {
             mTextParam.textColor = action1;
             return this;
         }

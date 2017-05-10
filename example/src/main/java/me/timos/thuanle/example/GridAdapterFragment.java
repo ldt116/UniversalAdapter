@@ -10,23 +10,25 @@ import android.view.ViewGroup;
 import me.timos.thuanle.universaladapter.DataCallback;
 import me.timos.thuanle.universaladapter.OnBindAsyncAction;
 import me.timos.thuanle.universaladapter.UniversalAdapter;
-import me.timos.thuanle.universaladapter.binder.TextViewBinder;
 
 public class GridAdapterFragment extends android.support.v4.app.Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         RecyclerView rv = (RecyclerView) inflater.inflate(R.layout.fragment_recycler, container, false);
-        UniversalAdapter<String> adapter = UniversalAdapter.Builder.with("A","B","C","D","E","F","G","H","I","J")
-                .itemLayout(R.layout.item_simple)
-                .bind(TextViewBinder.Builder.with(R.id.tvTitle, String.class)
-                        .text(new OnBindAsyncAction<String, String>() {
-                            @Override
-                            public void map(int position, String data, DataCallback<String> callback) {
-                                callback.onResult(data);
-                            }
-                        }))
-                .build();
+        UniversalAdapter.Builder<String> builder = UniversalAdapter.Builder.with("A", "B", "C", "D", "E", "F", "G", "H", "I", "J")
+                .itemLayout(R.layout.item_simple);
+
+        builder.bindTextView(R.id.tvTitle)
+                .text(new OnBindAsyncAction<String, CharSequence>() {
+                    @Override
+                    public void map(int position, String data, DataCallback<CharSequence> callback) {
+                        callback.onResult(data);
+                    }
+                });
+
+
+        UniversalAdapter<String> adapter = builder.build();
         rv.setLayoutManager(adapter.createLayoutManager(getContext(), 2));
         rv.setAdapter(adapter);
         return rv;

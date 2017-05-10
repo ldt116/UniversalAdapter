@@ -25,9 +25,9 @@ public class CircularImageAdapterFragment extends android.support.v4.app.Fragmen
                 .itemLayout(R.layout.item_circular);
 
         builder.bindTextView(R.id.tvTitle)
-                .text(new OnBindAsyncAction<Hero, String>() {
+                .text(new OnBindAsyncAction<Hero, CharSequence>() {
                     @Override
-                    public void map(int position, Hero data, DataCallback<String> callback) {
+                    public void map(int position, Hero data, DataCallback<CharSequence> callback) {
                         callback.onResult(data.title);
                     }
                 });

@@ -21,9 +21,9 @@ public class ImageAdapterFragment extends android.support.v4.app.Fragment {
         UniversalAdapter.Builder<Hero> builder = UniversalAdapter.Builder.with(HeroService.getHeroes())
                 .itemLayout(R.layout.item_simple);
         builder.bindTextView(R.id.tvTitle)
-                .text(new OnBindAsyncAction<Hero, String>() {
+                .text(new OnBindAsyncAction<Hero, CharSequence>() {
                     @Override
-                    public void map(int position, Hero data, DataCallback<String> callback) {
+                    public void map(int position, Hero data, DataCallback<CharSequence> callback) {
                         callback.onResult(data.title);
                     }
                 });

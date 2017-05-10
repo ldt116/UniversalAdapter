@@ -91,20 +91,16 @@ public class ViewBinder<D, V extends View, P extends ViewBinder.Param<D, V>> {
         OnBindAsyncAction<D, Boolean> invisibleWhen;
     }
 
-    public static class Builder<D, V extends View> {
+    public static class VBuilder<D, V extends View> {
         final int mId;
         Param<D, V> mParam;
 
-        public Builder(@IdRes int resId) {
+        public VBuilder(@IdRes int resId) {
             mId = resId;
             mParam = new Param<>();
         }
 
-        public static <V extends View, T> Builder<T, V> with(@IdRes int resId, Class<V> classOfView, Class<T> classOfData) {
-            return new Builder<>(resId);
-        }
-
-        public Builder<D, V> backColor(OnBindAsyncAction<D, Integer> action1) {
+        public VBuilder<D, V> backColor(OnBindAsyncAction<D, Integer> action1) {
             mParam.backColor = action1;
             return this;
         }
@@ -113,7 +109,7 @@ public class ViewBinder<D, V extends View, P extends ViewBinder.Param<D, V>> {
             return new ViewBinder<>(mId, mParam);
         }
 
-        public Builder<D, V> customBind(OnBindCustomAction<D, V> action1) {
+        public VBuilder<D, V> customBind(OnBindCustomAction<D, V> action1) {
             mParam.customBindAction = action1;
             return this;
         }
@@ -124,7 +120,7 @@ public class ViewBinder<D, V extends View, P extends ViewBinder.Param<D, V>> {
          * @param action1
          * @return builder for chain call
          */
-        public Builder<D, V> goneWhen(OnBindAsyncAction<D, Boolean> action1) {
+        public VBuilder<D, V> goneWhen(OnBindAsyncAction<D, Boolean> action1) {
             if (mParam.visibility != null) {
                 throw new IllegalArgumentException("Conflict binding options. You can not set both 'visibility' and 'goneWhen' at one object.");
             }
@@ -138,7 +134,7 @@ public class ViewBinder<D, V extends View, P extends ViewBinder.Param<D, V>> {
          * @param action1
          * @return builder for chain call
          */
-        public Builder<D, V> invisibleWhen(OnBindAsyncAction<D, Boolean> action1) {
+        public VBuilder<D, V> invisibleWhen(OnBindAsyncAction<D, Boolean> action1) {
             if (mParam.visibility != null) {
                 throw new IllegalArgumentException("Conflict binding options. You can not set both 'visibility' and 'invisibleWhen' at one object.");
             }
@@ -146,12 +142,12 @@ public class ViewBinder<D, V extends View, P extends ViewBinder.Param<D, V>> {
             return this;
         }
 
-        public Builder<D, V> onClick(OnClickElementListener<D> listener) {
+        public VBuilder<D, V> onClick(OnClickElementListener<D> listener) {
             mParam.onClickListener = listener;
             return this;
         }
 
-        public Builder<D, V> visibility(OnBindAsyncAction<D, Integer> action1) {
+        public VBuilder<D, V> visibility(OnBindAsyncAction<D, Integer> action1) {
             if (mParam.goneWhen != null || mParam.invisibleWhen != null) {
                 throw new IllegalArgumentException("Conflict binding options. You can not set both 'visibility' and 'goneWhen' or 'invisibleWhen' at one object.");
             }

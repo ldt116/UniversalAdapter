@@ -205,35 +205,26 @@ public class UniversalAdapter<D> extends RecyclerView.Adapter<UniversalAdapter.V
             return new Builder<>(data);
         }
 
-        public Builder<T> bind(ViewBinder<T, ?, ?> binder) {
-            mParam.binders.add(binder);
-            return this;
-        }
-
-        public Builder<T> bind(ViewBinder.Builder<T, ?> builder) {
-            return bind(builder.build());
-        }
-
-        public ImageViewBinder.Builder<T> bindImageView(@IdRes int resId) {
-            ImageViewBinder.Builder<T> binder = new ImageViewBinder.Builder<>(resId);
+        public ImageViewBinder.IVBuilder<T> bindImageView(@IdRes int resId) {
+            ImageViewBinder.IVBuilder<T> binder = new ImageViewBinder.IVBuilder<>(resId);
             mParam.binders.add(binder.build());
             return binder;
         }
 
-        public TextViewBinder.Builder<T> bindTextView(@IdRes int resId) {
-            TextViewBinder.Builder<T> binder = new TextViewBinder.Builder<>(resId);
+        public TextViewBinder.TVBuilder<T> bindTextView(@IdRes int resId) {
+            TextViewBinder.TVBuilder<T> binder = new TextViewBinder.TVBuilder<>(resId);
             mParam.binders.add(binder.build());
             return binder;
         }
 
-        public ViewBinder.Builder<T, View> bindView(@IdRes int resId) {
-            ViewBinder.Builder<T, View> binder = new ViewBinder.Builder<>(resId);
+        public ViewBinder.VBuilder<T, View> bindView(@IdRes int resId) {
+            ViewBinder.VBuilder<T, View> binder = new ViewBinder.VBuilder<>(resId);
             mParam.binders.add(binder.build());
             return binder;
         }
 
-        public <V extends View> ViewBinder.Builder<T, V> bindView(@IdRes int resId, Class<V> classOfView) {
-            ViewBinder.Builder<T, V> binder = new ViewBinder.Builder<>(resId);
+        public <V extends View> ViewBinder.VBuilder<T, V> bindView(@IdRes int resId, Class<V> classOfView) {
+            ViewBinder.VBuilder<T, V> binder = new ViewBinder.VBuilder<>(resId);
             mParam.binders.add(binder.build());
             return binder;
         }
@@ -260,29 +251,26 @@ public class UniversalAdapter<D> extends RecyclerView.Adapter<UniversalAdapter.V
             return this;
         }
 
-        public Builder<T> groupHeaderBind(ViewBinder<String, ?, ?> binder) {
-            mParam.groupHeaderBinders.add(binder);
-            return this;
-        }
-
-        public Builder<T> groupHeaderBind(ViewBinder.Builder<String, ?> builder) {
-            return groupHeaderBind(builder.build());
-        }
-
-        public ImageViewBinder.Builder<String> groupHeaderBindImageView(@IdRes int resId) {
-            ImageViewBinder.Builder<String> binder = new ImageViewBinder.Builder<>(resId);
+        public ImageViewBinder.IVBuilder<String> groupHeaderBindImageView(@IdRes int resId) {
+            ImageViewBinder.IVBuilder<String> binder = new ImageViewBinder.IVBuilder<>(resId);
             mParam.groupHeaderBinders.add(binder.build());
             return binder;
         }
 
-        public TextViewBinder.Builder<String> groupHeaderBindTextView(@IdRes int resId) {
-            TextViewBinder.Builder<String> binder = new TextViewBinder.Builder<>(resId);
+        public TextViewBinder.TVBuilder<String> groupHeaderBindTextView(@IdRes int resId) {
+            TextViewBinder.TVBuilder<String> binder = new TextViewBinder.TVBuilder<>(resId);
             mParam.groupHeaderBinders.add(binder.build());
             return binder;
         }
 
-        public ViewBinder.Builder<String, View> groupHeaderBindView(@IdRes int resId) {
-            ViewBinder.Builder<String, View> binder = new ViewBinder.Builder<>(resId);
+        public ViewBinder.VBuilder<String, View> groupHeaderBindView(@IdRes int resId) {
+            ViewBinder.VBuilder<String, View> binder = new ViewBinder.VBuilder<>(resId);
+            mParam.groupHeaderBinders.add(binder.build());
+            return binder;
+        }
+
+        public <V extends View> ViewBinder.VBuilder<String, V> groupHeaderBindView(@IdRes int resId, Class<V> classOfView) {
+            ViewBinder.VBuilder<String, V> binder = new ViewBinder.VBuilder<>(resId);
             mParam.groupHeaderBinders.add(binder.build());
             return binder;
         }
