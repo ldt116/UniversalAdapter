@@ -10,7 +10,7 @@ Yet another adapter class for `RecyclerView` on Android, or perhaps, this will b
 * No need to write `ViewHolder` class
 * Supports sectioned data with `categorizer`
 * Designed with `callback` for every binding function. So you can handle for long time operations.
-* `ImageView` load from local drawable resource or remote url via [Ion](https://github.com/koush/ion).
+* `ImageView` load from local drawable resource or remote url via [Picasso](https://github.com/square/picasso).
 * Customized binder is available for customized view.
 
 ## Setup
@@ -158,7 +158,7 @@ Acknowledgements
 3rd party libraries used in `UniversalAdapter`:
 
 * [Google Guava](https://github.com/google/guava)
-* [Ion](https://github.com/koush/ion)
+* [Picasso](https://github.com/square/picasso)
 
 Contribution
 ------------ 

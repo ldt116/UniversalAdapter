@@ -13,7 +13,7 @@ ext {
     siteUrl = 'https://github.com/ldt116/UniversalAdapter'
     gitUrl = 'https://github.com/ldt116/UniversalAdapter.git'
 
-    libraryVersion = '1.0.0'
+    libraryVersion = '1.0.1'
 
     developerId = 'ldt116'
     developerName = 'Thuan Le'
@@ -32,7 +32,7 @@ android {
         minSdkVersion 9
         targetSdkVersion 25
         versionCode 5
-        versionName "1.0.0"
+        versionName "1.0.1"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
