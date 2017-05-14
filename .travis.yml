@@ -11,5 +11,8 @@ android:
 jdk:
   - oraclejdk8
 
+before_script:
+  - touch local.properties
+
 script:
-  - ./gradlew clean check
+  - ./gradlew assembleDebug
