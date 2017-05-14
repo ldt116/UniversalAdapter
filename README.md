@@ -1,6 +1,6 @@
 # UniversalAdapter
 
-`RecyclerView` is the mandatory view needed for almost Android applications. If you are tired of creating messy classes in order to work with `RecyclerView`, or you don't want to copy the same base code again and again through your projects, then `UniversalAdapter` is the one for you.
+`RecyclerView` is the mandatory view needed for almost Android applications. If you are tired of creating messy classes in order to work with `RecyclerView`, or if you don't want to copy the same base code again and again between projects, then `UniversalAdapter` is the one for you.
 
 Yet another adapter class for `RecyclerView` on Android, or perhaps, this will be the last one you need. With `UniversalAdapter`, you don't need to write a `RecyclerView.Adapter` ever again, including its' `ViewHolder`.
 
@@ -109,10 +109,9 @@ The `.text(..)` is corresponding the action `setText` for the `TextView`, you ne
 
 **Note**:
 
-* In the 3rd step, we break the chain call. Each bind options for a specific view should call the original builder by begining the  statement with `builder.bind....`.  If you dig deeper, the call `builder.bindTextView` does not return the `UA-Builder`. It returns the `TextView-Builder` which allow add binding options for selected `TextView`.
+* In the 3rd step, we break the chain call. Each bind options for a specific view should call the original builder by begining the  statement with `builder.bind....`.  If you dig deeper, the call `builder.bindTextView` does not return the `UA-Builder`. It returns the `TextView-Builder` which allow add binding options for  the selected `TextView`.
 
-* There is a question, why dont just simplify the `map` to return direct the result, for example `String map(position, data)`. The answer is with `callback` approach, you don't get ANR in case you need a long time operations (such as download image from the internet, you can find more in other examples).
-
+* There is a question, why dont just simplify the `map` to return direct the result, for example `String map(position, data)`. The answer is with `callback` approach, you don't get ANR in case you need a long time operations (such as download image from the internet, you can find more in other examples). But you need to handle the thread by yourself. 
 
 ### Advance usage
 
