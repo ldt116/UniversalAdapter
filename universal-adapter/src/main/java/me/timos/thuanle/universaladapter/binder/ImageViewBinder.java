@@ -6,7 +6,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.koushikdutta.ion.Ion;
+import com.squareup.picasso.Picasso;
 
 import me.timos.thuanle.universaladapter.DataCallback;
 import me.timos.thuanle.universaladapter.OnBindAsyncAction;
@@ -34,7 +34,7 @@ public class ImageViewBinder<D> extends ViewBinder<D, ImageView, ImageViewBinder
                         int resId = Integer.valueOf(data);
                         iv.setImageResource(resId);
                     } else {
-                        Ion.with(iv).load(data);
+                        Picasso.with(iv.getContext()).load(data).into(iv);
                     }
 
                 }

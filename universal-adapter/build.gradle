@@ -54,7 +54,7 @@ dependencies {
     compile "com.android.support:appcompat-v7:$supportLibraryVersion"
     compile "com.android.support:recyclerview-v7:$supportLibraryVersion"
 
-    compile 'com.koushikdutta.ion:ion:2.1.9'
+    compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.google.guava:guava:20.0'
 
     testCompile 'junit:junit:4.12'
