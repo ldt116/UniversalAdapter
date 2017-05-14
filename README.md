@@ -1,5 +1,7 @@
 # UniversalAdapter
 
+[ ![Download](https://api.bintray.com/packages/thuanle/maven/UniversalAdapter/images/download.svg) ](https://bintray.com/thuanle/maven/UniversalAdapter/_latestVersion) [![Build Status](https://travis-ci.org/ldt116/UniversalAdapter.svg?branch=master)](https://travis-ci.org/ldt116/UniversalAdapter) 
+
 `RecyclerView` is the mandatory view needed for almost Android applications. If you are tired of creating messy classes in order to work with `RecyclerView`, or if you don't want to copy the same base code again and again between projects, then `UniversalAdapter` is the one for you.
 
 Yet another adapter class for `RecyclerView` on Android, or perhaps, this will be the last one you need. With `UniversalAdapter`, you don't need to write a `RecyclerView.Adapter` ever again, including its' `ViewHolder`.
