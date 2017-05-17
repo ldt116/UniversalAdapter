@@ -14,9 +14,9 @@ import me.timos.thuanle.universaladapter.OnBindAsyncAction;
 /**
  * @param <D> data type
  */
-public class ImageViewBinder<D> extends ViewBinder<D, ImageView, ImageViewBinder.Param<D>> {
+public class ImageViewBinder<D> extends ViewBinder<D, ImageView, ImageViewBinder.IVParam<D>> {
 
-    private ImageViewBinder(@IdRes int id, Param<D> param) {
+    private ImageViewBinder(@IdRes int id, IVParam<D> param) {
         super(id, param);
     }
 
@@ -36,32 +36,51 @@ public class ImageViewBinder<D> extends ViewBinder<D, ImageView, ImageViewBinder
                     } else {
                         Picasso.with(iv.getContext()).load(data).into(iv);
                     }
-
+                    onImageBinded(data, iv);
                 }
             });
         }
 
         if (mParam.imageResource != null) {
             iv.setImageResource(mParam.imageResource[position]);
+            onImageBinded(String.valueOf(mParam.imageResource[position]), iv);
         }
     }
 
-    static class Param<D> extends ViewBinder.Param<D, ImageView> {
+    private void onImageBinded(String data, ImageView iv) {
+        if (mParam.goneWhenEmpty) {
+            iv.setVisibility(TextUtils.isEmpty(data) ? View.GONE : View.VISIBLE);
+        } else if (mParam.invisibleWhenEmpty) {
+            iv.setVisibility(TextUtils.isEmpty(data) ? View.INVISIBLE : View.VISIBLE);
+        }
+    }
+
+    static class IVParam<D> extends ViewBinder.Param<D, ImageView> {
         int[] imageResource;
         OnBindAsyncAction<D, String> src;
+        boolean goneWhenEmpty;
+        boolean invisibleWhenEmpty;
     }
 
     public static class IVBuilder<D> extends VBuilder<D, ImageView> {
-        private Param<D> mImageParam;
+        private IVParam<D> mImageParam;
 
         public IVBuilder(@IdRes int resId) {
             super(resId);
-            mParam = mImageParam = new Param<>();
+            mParam = mImageParam = new IVParam<>();
         }
 
         @Override
         public ViewBinder<D, ImageView, ? extends ViewBinder.Param<D, ImageView>> build() {
             return new ImageViewBinder<>(mId, mImageParam);
+        }
+
+        public IVBuilder<D> goneWhenEmpty() {
+            if (mImageParam.invisibleWhenEmpty) {
+                throw new IllegalArgumentException("Conflict binding options. You can not set both 'goneWhenEmpty' and 'invisibleWhenEmpty' at one object.");
+            }
+            mImageParam.goneWhenEmpty = true;
+            return this;
         }
 
         public IVBuilder<D> image(@DrawableRes int... drawableRes) {
@@ -71,6 +90,14 @@ public class ImageViewBinder<D> extends ViewBinder<D, ImageView, ImageViewBinder
 
         public IVBuilder<D> image(OnBindAsyncAction<D, String> action1) {
             mImageParam.src = action1;
+            return this;
+        }
+
+        public IVBuilder<D> invisibleWhenEmpty() {
+            if (mImageParam.goneWhenEmpty) {
+                throw new IllegalArgumentException("Conflict binding options. You can not set both 'goneWhenEmpty' and 'invisibleWhenEmpty' at one object.");
+            }
+            mImageParam.invisibleWhenEmpty = true;
             return this;
         }
     }

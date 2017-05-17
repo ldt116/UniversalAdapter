@@ -8,8 +8,8 @@ import android.widget.TextView;
 import me.timos.thuanle.universaladapter.DataCallback;
 import me.timos.thuanle.universaladapter.OnBindAsyncAction;
 
-public class TextViewBinder<T> extends ViewBinder<T, TextView, TextViewBinder.Param<T>> {
-    private TextViewBinder(@IdRes int id, Param<T> param) {
+public class TextViewBinder<T> extends ViewBinder<T, TextView, TextViewBinder.TVParam<T>> {
+    private TextViewBinder(@IdRes int id, TVParam<T> param) {
         super(id, param);
     }
 
@@ -46,24 +46,24 @@ public class TextViewBinder<T> extends ViewBinder<T, TextView, TextViewBinder.Pa
         }
     }
 
-    static class Param<D> extends ViewBinder.Param<D, TextView> {
+    static class TVParam<D> extends ViewBinder.Param<D, TextView> {
         OnBindAsyncAction<D, CharSequence> text;
         OnBindAsyncAction<D, Integer> textColor;
         boolean goneWhenEmpty;
         boolean invisibleWhenEmpty;
 
-        Param() {
+        TVParam() {
             goneWhenEmpty = false;
             invisibleWhenEmpty = false;
         }
     }
 
     public static class TVBuilder<D> extends VBuilder<D, TextView> {
-        Param<D> mTextParam;
+        TVParam<D> mTextParam;
 
         public TVBuilder(@IdRes int resId) {
             super(resId);
-            mParam = mTextParam = new Param<>();
+            mParam = mTextParam = new TVParam<>();
         }
 
         @Override

@@ -11,7 +11,7 @@ import me.timos.thuanle.universaladapter.OnClickElementListener;
 /**
  * @param <V> View class
  * @param <D> Data class
- * @param <P> Param class
+ * @param <P> IVParam class
  */
 public class ViewBinder<D, V extends View, P extends ViewBinder.Param<D, V>> {
     @IdRes
