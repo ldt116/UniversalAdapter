@@ -39,22 +39,19 @@ public class TextViewBinder<T> extends ViewBinder<T, TextView, TextViewBinder.TV
     }
 
     private void onTextBinded(CharSequence data, TextView tv) {
-        if (mParam.goneWhenEmpty) {
-            tv.setVisibility(TextUtils.isEmpty(data) ? View.GONE : View.VISIBLE);
-        } else if (mParam.invisibleWhenEmpty) {
-            tv.setVisibility(TextUtils.isEmpty(data) ? View.INVISIBLE : View.VISIBLE);
+        if (mParam.visibilityWhenEmpty != TVParam.VISIBILY_WHEN_EMPTY_NOT_SET) {
+            tv.setVisibility(TextUtils.isEmpty(data) ? mParam.visibilityWhenEmpty : View.VISIBLE);
         }
     }
 
     static class TVParam<D> extends ViewBinder.Param<D, TextView> {
+        public static final int VISIBILY_WHEN_EMPTY_NOT_SET = -1;
         OnBindAsyncAction<D, CharSequence> text;
         OnBindAsyncAction<D, Integer> textColor;
-        boolean goneWhenEmpty;
-        boolean invisibleWhenEmpty;
+        int visibilityWhenEmpty;
 
         TVParam() {
-            goneWhenEmpty = false;
-            invisibleWhenEmpty = false;
+            visibilityWhenEmpty = VISIBILY_WHEN_EMPTY_NOT_SET;
         }
     }
 
@@ -72,33 +69,26 @@ public class TextViewBinder<T> extends ViewBinder<T, TextView, TextViewBinder.TV
         }
 
         /**
-         * Set visibility is <code>View.GONE</code> when the text is null or 0-length.
+         * Set text
          *
+         * @param action1
          * @return
          */
-        public TVBuilder<D> goneWhenEmpty() {
-            if (mTextParam.invisibleWhenEmpty) {
-                throw new IllegalArgumentException("Conflict binding options. You can not set both 'goneWhenEmpty' and 'invisibleWhenEmpty' at one object.");
-            }
-            mTextParam.goneWhenEmpty = true;
+        public TVBuilder<D> text(OnBindAsyncAction<D, CharSequence> action1) {
+            mTextParam.text = action1;
             return this;
         }
 
         /**
-         * Set visibility is <code>View.INVISIBLE</code> when the text is null or 0-length.
+         * Set text and visibility when text are empty
          *
+         * @param action1             the text callback
+         * @param visibilityWhenEmpty the visibility when text are empty
          * @return
          */
-        public TVBuilder<D> invisibleWhenEmpty() {
-            if (mTextParam.goneWhenEmpty) {
-                throw new IllegalArgumentException("Conflict binding options. You can not set both 'goneWhenEmpty' and 'invisibleWhenEmpty' at one object.");
-            }
-            mTextParam.invisibleWhenEmpty = true;
-            return this;
-        }
-
-        public TVBuilder<D> text(OnBindAsyncAction<D, CharSequence> action1) {
+        public TVBuilder<D> text(OnBindAsyncAction<D, CharSequence> action1, int visibilityWhenEmpty) {
             mTextParam.text = action1;
+            mTextParam.visibilityWhenEmpty = visibilityWhenEmpty;
             return this;
         }
 

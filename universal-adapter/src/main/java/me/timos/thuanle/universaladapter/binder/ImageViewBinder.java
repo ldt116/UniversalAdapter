@@ -48,18 +48,21 @@ public class ImageViewBinder<D> extends ViewBinder<D, ImageView, ImageViewBinder
     }
 
     private void onImageBinded(String data, ImageView iv) {
-        if (mParam.goneWhenEmpty) {
-            iv.setVisibility(TextUtils.isEmpty(data) ? View.GONE : View.VISIBLE);
-        } else if (mParam.invisibleWhenEmpty) {
-            iv.setVisibility(TextUtils.isEmpty(data) ? View.INVISIBLE : View.VISIBLE);
+        if (mParam.visibilityWhenEmpty != ImageViewBinder.IVParam.VISIBILY_WHEN_EMPTY_NOT_SET) {
+            iv.setVisibility(TextUtils.isEmpty(data) ? mParam.visibilityWhenEmpty : View.VISIBLE);
         }
     }
 
     static class IVParam<D> extends ViewBinder.Param<D, ImageView> {
+        public static final int VISIBILY_WHEN_EMPTY_NOT_SET = -1;
+
         int[] imageResource;
         OnBindAsyncAction<D, String> src;
-        boolean goneWhenEmpty;
-        boolean invisibleWhenEmpty;
+        int visibilityWhenEmpty;
+
+        IVParam() {
+            visibilityWhenEmpty = VISIBILY_WHEN_EMPTY_NOT_SET;
+        }
     }
 
     public static class IVBuilder<D> extends VBuilder<D, ImageView> {
@@ -75,14 +78,6 @@ public class ImageViewBinder<D> extends ViewBinder<D, ImageView, ImageViewBinder
             return new ImageViewBinder<>(mId, mImageParam);
         }
 
-        public IVBuilder<D> goneWhenEmpty() {
-            if (mImageParam.invisibleWhenEmpty) {
-                throw new IllegalArgumentException("Conflict binding options. You can not set both 'goneWhenEmpty' and 'invisibleWhenEmpty' at one object.");
-            }
-            mImageParam.goneWhenEmpty = true;
-            return this;
-        }
-
         public IVBuilder<D> image(@DrawableRes int... drawableRes) {
             mImageParam.imageResource = drawableRes;
             return this;
@@ -93,11 +88,9 @@ public class ImageViewBinder<D> extends ViewBinder<D, ImageView, ImageViewBinder
             return this;
         }
 
-        public IVBuilder<D> invisibleWhenEmpty() {
-            if (mImageParam.goneWhenEmpty) {
-                throw new IllegalArgumentException("Conflict binding options. You can not set both 'goneWhenEmpty' and 'invisibleWhenEmpty' at one object.");
-            }
-            mImageParam.invisibleWhenEmpty = true;
+        public IVBuilder<D> image(OnBindAsyncAction<D, String> action1, int visibilityWhenEmpty) {
+            mImageParam.src = action1;
+            mImageParam.visibilityWhenEmpty = visibilityWhenEmpty;
             return this;
         }
     }
