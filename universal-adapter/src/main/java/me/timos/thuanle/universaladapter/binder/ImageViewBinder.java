@@ -48,20 +48,20 @@ public class ImageViewBinder<D> extends ViewBinder<D, ImageView, ImageViewBinder
     }
 
     private void onImageBinded(String data, ImageView iv) {
-        if (mParam.visibilityWhenEmpty != ImageViewBinder.IVParam.VISIBILY_WHEN_EMPTY_NOT_SET) {
+        if (mParam.visibilityWhenEmpty != ImageViewBinder.IVParam.VISIBILITY_WHEN_EMPTY_NOT_SET) {
             iv.setVisibility(TextUtils.isEmpty(data) ? mParam.visibilityWhenEmpty : View.VISIBLE);
         }
     }
 
     static class IVParam<D> extends ViewBinder.Param<D, ImageView> {
-        public static final int VISIBILY_WHEN_EMPTY_NOT_SET = -1;
+        static final int VISIBILITY_WHEN_EMPTY_NOT_SET = -1;
 
         int[] imageResource;
         OnBindAsyncAction<D, String> src;
         int visibilityWhenEmpty;
 
         IVParam() {
-            visibilityWhenEmpty = VISIBILY_WHEN_EMPTY_NOT_SET;
+            visibilityWhenEmpty = VISIBILITY_WHEN_EMPTY_NOT_SET;
         }
     }
 
@@ -84,8 +84,7 @@ public class ImageViewBinder<D> extends ViewBinder<D, ImageView, ImageViewBinder
         }
 
         public IVBuilder<D> image(OnBindAsyncAction<D, String> action1) {
-            mImageParam.src = action1;
-            return this;
+            return image(action1, IVParam.VISIBILITY_WHEN_EMPTY_NOT_SET);
         }
 
         public IVBuilder<D> image(OnBindAsyncAction<D, String> action1, int visibilityWhenEmpty) {

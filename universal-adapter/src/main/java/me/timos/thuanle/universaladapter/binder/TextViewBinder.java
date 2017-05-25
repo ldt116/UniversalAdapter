@@ -39,19 +39,19 @@ public class TextViewBinder<T> extends ViewBinder<T, TextView, TextViewBinder.TV
     }
 
     private void onTextBinded(CharSequence data, TextView tv) {
-        if (mParam.visibilityWhenEmpty != TVParam.VISIBILY_WHEN_EMPTY_NOT_SET) {
+        if (mParam.visibilityWhenEmpty != TVParam.VISIBILITY_WHEN_EMPTY_NOT_SET) {
             tv.setVisibility(TextUtils.isEmpty(data) ? mParam.visibilityWhenEmpty : View.VISIBLE);
         }
     }
 
     static class TVParam<D> extends ViewBinder.Param<D, TextView> {
-        public static final int VISIBILY_WHEN_EMPTY_NOT_SET = -1;
+        static final int VISIBILITY_WHEN_EMPTY_NOT_SET = -1;
         OnBindAsyncAction<D, CharSequence> text;
         OnBindAsyncAction<D, Integer> textColor;
         int visibilityWhenEmpty;
 
         TVParam() {
-            visibilityWhenEmpty = VISIBILY_WHEN_EMPTY_NOT_SET;
+            visibilityWhenEmpty = VISIBILITY_WHEN_EMPTY_NOT_SET;
         }
     }
 
@@ -75,8 +75,7 @@ public class TextViewBinder<T> extends ViewBinder<T, TextView, TextViewBinder.TV
          * @return
          */
         public TVBuilder<D> text(OnBindAsyncAction<D, CharSequence> action1) {
-            mTextParam.text = action1;
-            return this;
+            return text(action1, TVParam.VISIBILITY_WHEN_EMPTY_NOT_SET);
         }
 
         /**
