@@ -146,7 +146,7 @@ UniversalAdapter<Skill> ua = builder.build();
 
 ## TODO
 
-Here is the list for future work
+Here is the list for future works
 
 * Binders for common widgets such as `Button`, `Spinner`. etc.
 * Ability add new view type and it binders.
