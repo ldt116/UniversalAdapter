@@ -150,7 +150,7 @@ Here is the list for future work
 
 * Binders for common widgets such as `Button`, `Spinner`. etc.
 * Ability add new view type and it binders.
-* Example for `visibility` such as `View.goneWhen`, `View.invisibleWhen`, `TextView.goneWhenEmpty`...
+* Example for `visibility` such as `View.goneWhen`, `View.invisibleWhen`
 
 Acknowledgements
 ----------------
