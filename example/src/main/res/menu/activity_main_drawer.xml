@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_simple_adapter"
+        android:title="Simple Adapter"/>
+    <item
+        android:id="@+id/nav_grid_adapter"
+        android:title="Grid Adapter"/>
+
+    <item
+        android:id="@+id/nav_image_adapter"
+        android:title="Image Adapter"/>
+
+    <item
+        android:id="@+id/nav_group_adapter"
+        android:title="Group/Section Adapter"/>
+
+    <item
+        android:id="@+id/nav_custom_adapter"
+        android:title="Custom View Adapter"/>
+
+</menu>
