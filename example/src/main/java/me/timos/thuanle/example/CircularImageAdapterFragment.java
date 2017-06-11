@@ -8,8 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.koushikdutta.ion.Ion;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.squareup.picasso.Picasso;
 
 import me.timos.thuanle.universaladapter.DataCallback;
 import me.timos.thuanle.universaladapter.OnBindAsyncAction;
@@ -36,8 +36,7 @@ public class CircularImageAdapterFragment extends android.support.v4.app.Fragmen
                 .customBind(new OnBindCustomAction<Hero, RoundedImageView>() {
                     @Override
                     public void apply(int position, Hero data, RoundedImageView view) {
-                        Ion.with(view)
-                                .load(data.url);
+                        Picasso.with(getContext()).load(data.url).into(view);
                         view.setBorderColor(getResources().getColor(HeroService.getColor(data.primary)));
                     }
                 });

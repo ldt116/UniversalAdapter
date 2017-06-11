@@ -6,7 +6,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.koushikdutta.ion.Ion;
+import com.squareup.picasso.Picasso;
 
 import me.timos.thuanle.universaladapter.DataCallback;
 import me.timos.thuanle.universaladapter.OnBindAsyncAction;
@@ -14,9 +14,9 @@ import me.timos.thuanle.universaladapter.OnBindAsyncAction;
 /**
  * @param <D> data type
  */
-public class ImageViewBinder<D> extends ViewBinder<D, ImageView, ImageViewBinder.Param<D>> {
+public class ImageViewBinder<D> extends ViewBinder<D, ImageView, ImageViewBinder.IVParam<D>> {
 
-    private ImageViewBinder(@IdRes int id, Param<D> param) {
+    private ImageViewBinder(@IdRes int id, IVParam<D> param) {
         super(id, param);
     }
 
@@ -34,29 +34,43 @@ public class ImageViewBinder<D> extends ViewBinder<D, ImageView, ImageViewBinder
                         int resId = Integer.valueOf(data);
                         iv.setImageResource(resId);
                     } else {
-                        Ion.with(iv).load(data);
+                        Picasso.with(iv.getContext()).load(data).into(iv);
                     }
-
+                    onImageBinded(data, iv);
                 }
             });
         }
 
         if (mParam.imageResource != null) {
             iv.setImageResource(mParam.imageResource[position]);
+            onImageBinded(String.valueOf(mParam.imageResource[position]), iv);
         }
     }
 
-    static class Param<D> extends ViewBinder.Param<D, ImageView> {
+    private void onImageBinded(String data, ImageView iv) {
+        if (mParam.visibilityWhenEmpty != ImageViewBinder.IVParam.VISIBILITY_WHEN_EMPTY_NOT_SET) {
+            iv.setVisibility(TextUtils.isEmpty(data) ? mParam.visibilityWhenEmpty : View.VISIBLE);
+        }
+    }
+
+    static class IVParam<D> extends ViewBinder.Param<D, ImageView> {
+        static final int VISIBILITY_WHEN_EMPTY_NOT_SET = -1;
+
         int[] imageResource;
         OnBindAsyncAction<D, String> src;
+        int visibilityWhenEmpty;
+
+        IVParam() {
+            visibilityWhenEmpty = VISIBILITY_WHEN_EMPTY_NOT_SET;
+        }
     }
 
     public static class IVBuilder<D> extends VBuilder<D, ImageView> {
-        private Param<D> mImageParam;
+        private IVParam<D> mImageParam;
 
         public IVBuilder(@IdRes int resId) {
             super(resId);
-            mParam = mImageParam = new Param<>();
+            mParam = mImageParam = new IVParam<>();
         }
 
         @Override
@@ -70,7 +84,12 @@ public class ImageViewBinder<D> extends ViewBinder<D, ImageView, ImageViewBinder
         }
 
         public IVBuilder<D> image(OnBindAsyncAction<D, String> action1) {
+            return image(action1, IVParam.VISIBILITY_WHEN_EMPTY_NOT_SET);
+        }
+
+        public IVBuilder<D> image(OnBindAsyncAction<D, String> action1, int visibilityWhenEmpty) {
             mImageParam.src = action1;
+            mImageParam.visibilityWhenEmpty = visibilityWhenEmpty;
             return this;
         }
     }
