@@ -18,7 +18,7 @@ Yet another adapter class for `RecyclerView` on Android, or perhaps, this will b
 You can get via `jCenter()` in Gradle:
 
 ```groovy
-compile 'me.timos.thuanle:universal-adapter:1.0.0'
+compile 'me.timos.thuanle:universal-adapter:1.0.1'
 ```
 Note: 
 
