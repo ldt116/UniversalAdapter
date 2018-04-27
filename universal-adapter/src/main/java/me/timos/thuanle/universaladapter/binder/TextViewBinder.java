@@ -28,6 +28,15 @@ public class TextViewBinder<T> extends ViewBinder<T, TextView, TextViewBinder.TV
             });
         }
 
+        if (mParam.textRes != null) {
+            mParam.textRes.map(position, data, new DataCallback<Integer>() {
+                @Override
+                public void onResult(Integer data) {
+                    tv.setText(data);
+                }
+            });
+        }
+
         if (mParam.textColor != null) {
             mParam.textColor.map(position, data, new DataCallback<Integer>() {
                 @Override
@@ -48,7 +57,9 @@ public class TextViewBinder<T> extends ViewBinder<T, TextView, TextViewBinder.TV
         static final int VISIBILITY_WHEN_EMPTY_NOT_SET = -1;
         OnBindAsyncAction<D, CharSequence> text;
         OnBindAsyncAction<D, Integer> textColor;
+        OnBindAsyncAction<D, Integer> textRes;
         int visibilityWhenEmpty;
+
 
         TVParam() {
             visibilityWhenEmpty = VISIBILITY_WHEN_EMPTY_NOT_SET;
@@ -76,6 +87,17 @@ public class TextViewBinder<T> extends ViewBinder<T, TextView, TextViewBinder.TV
          */
         public TVBuilder<D> text(OnBindAsyncAction<D, CharSequence> action1) {
             return text(action1, TVParam.VISIBILITY_WHEN_EMPTY_NOT_SET);
+        }
+
+        /**
+         * Set text
+         *
+         * @param action1
+         * @return
+         */
+        public TVBuilder<D> textRes(OnBindAsyncAction<D, Integer> action1) {
+            mTextParam.textRes = action1;
+            return this;
         }
 
         /**

@@ -24,6 +24,15 @@ public class ViewBinder<D, V extends View, P extends ViewBinder.Param<D, V>> {
     }
 
     public void bind(final int position, final D data, final View v) {
+        if (mParam.backgroundResource != null) {
+            mParam.backColor.map(position, data, new DataCallback<Integer>() {
+                @Override
+                public void onResult(Integer data) {
+                    v.setBackgroundResource(data);
+                }
+            });
+        }
+
         if (mParam.backColor != null) {
             mParam.backColor.map(position, data, new DataCallback<Integer>() {
                 @Override
@@ -89,6 +98,7 @@ public class ViewBinder<D, V extends View, P extends ViewBinder.Param<D, V>> {
         OnBindAsyncAction<D, Integer> visibility;
         OnBindAsyncAction<D, Boolean> goneWhen;
         OnBindAsyncAction<D, Boolean> invisibleWhen;
+        OnBindAsyncAction<D, Integer> backgroundResource;
     }
 
     public static class VBuilder<D, V extends View> {
@@ -99,6 +109,13 @@ public class ViewBinder<D, V extends View, P extends ViewBinder.Param<D, V>> {
             mId = resId;
             mParam = new Param<>();
         }
+
+
+        public VBuilder<D, V> backgroundResource(OnBindAsyncAction<D, Integer> action1) {
+            mParam.backgroundResource = action1;
+            return this;
+        }
+
 
         public VBuilder<D, V> backColor(OnBindAsyncAction<D, Integer> action1) {
             mParam.backColor = action1;
